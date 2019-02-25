@@ -77,10 +77,18 @@ router.post("/details/:id", (req, res, next) => {
 });
 
 // GET - process the delete by user id
-router.get("/delete/:id", (req, res, next) => {
-  /*****************
-   * ADD CODE HERE *
-   *****************/
+router.get("/:id", (req, res, next) => {
+  let id = req.params.id;
+
+  bookModel.remove({ _id: id }, err => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      // refresh the book list
+      res.redirect("/books");
+    }
+  });
 });
 
 module.exports = router;
